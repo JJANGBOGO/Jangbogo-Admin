@@ -22,7 +22,7 @@
             </when>
             <otherwise>
                 AND (pi.writer LIKE concat('%', #{keyword}, '%')
-                OR p.name LIKE concat('%', #{keyword}, '%'))
+                OR p.name LIKE concat('%', #{keyword}, '%')
                 OR pi.title LIKE concat('%', #{keyword}, '%'))
             </otherwise>
         </choose>
@@ -48,7 +48,11 @@
             </when>
             <otherwise>
                 AND (PROD_LATE.IDX LIKE concat('%', #{keyword}, '%')
-                OR PROD_LATE.WRITER LIKE concat('%', #{keyword}, '%') OR PROD_LATE.PROD_IDX LIKE concat('%', #{keyword}, '%') OR PRODUCT.NAME LIKE concat('%', #{keyword}, '%') OR PROD_LATE.CTENT LIKE concat('%', #{keyword}, '%') OR PROD_LATE.OPUB_YN LIKE concat('%', #{keyword}, '%'))
+                OR PROD_LATE.WRITER LIKE concat('%', #{keyword}, '%')
+                OR PROD_LATE.PROD_IDX LIKE concat('%', #{keyword}, '%')
+                OR PRODUCT.NAME LIKE concat('%', #{keyword}, '%')
+                OR PROD_LATE.CTENT LIKE concat('%', #{keyword}, '%')
+                OR PROD_LATE.OPUB_YN LIKE concat('%', #{keyword}, '%'))
             </otherwise>
         </choose>
     </sql>
@@ -161,12 +165,12 @@
                                 on pi.idx = pia.idx
         where pi.idx = #{idx};
     </select>
-<!--  [답변주가]상품문의 답변 추가하기  -->
+<!--  답변추가 - 상품문의 답변 추가하기  -->
     <insert id="insertInqry" parameterType="ProdInqryAnsDto">
         insert into prod_inqry_ans(idx, ctent, writer)
         values (#{idx}, #{ctent}, #{writer});
     </insert>
-<!-- [답변추가]상품문의 답변 상태코드 답변완료로 변경하기 -->
+<!-- 답변추가 - 상품문의 답변 상태코드 답변완료로 변경하기 -->
     <update id="changeAnsState" parameterType="Integer">
         update prod_inqry
         set RES_STATE_CD = 2
@@ -179,13 +183,13 @@
         where idx = #{idx};
     </update>
 
-<!--  [답변삭제]문의 삭제하기 문의 답변테이블, 문의 테이블 상태코드 변경 -->
+<!--  답변삭제 - 문의 삭제하기 문의 답변테이블, 문의 테이블 상태코드 변경 -->
     <update id="updateAnsTbCode" parameterType="Integer">
         update prod_inqry_ans
         set state_cd = 2
         where idx = #{idx};
     </update>
-<!--  [답변삭제]  -->
+<!--  답변삭제 -->
     <update id="updateInqryTbCode" parameterType="Integer">
         update prod_inqry
         set state_cd = 2
